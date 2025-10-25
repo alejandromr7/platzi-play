@@ -1,5 +1,7 @@
 package com.platziplay.web.controller;
 
+import com.platziplay.domain.dto.MovieDto;
+import com.platziplay.domain.service.MovieService;
 import com.platziplay.persistence.crud.CrudMovieEntity;
 import com.platziplay.persistence.entity.MovieEntity;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +14,17 @@ import java.util.List;
 @RestController
 public class MovieController {
 
-    private final CrudMovieEntity crudMovieEntity;
+    private final MovieService movieService;
 
-    public MovieController(CrudMovieEntity crudMovieEntity) {
-        this.crudMovieEntity = crudMovieEntity;
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
+
 
     @GetMapping("/movies")
-    public List<MovieEntity> getAllMovies() {
-        return (List<MovieEntity>) this.crudMovieEntity.obtenerPeliculas();
+    public List<MovieDto> getAllMovies() {
+        return this.movieService.getAllMovies();
     }
 
-    @GetMapping("/total")
-    public ResponseEntity<?> getMoviesTotal() {
-        return ResponseEntity.ok(this.crudMovieEntity.obtenerPeliculasCount());
-    }
+
 }
